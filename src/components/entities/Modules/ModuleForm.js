@@ -2,18 +2,20 @@ import useFetch  from '../../api/useFetch.js';
 import Form from '../../UI/Form.js';
 
 
-export default function ModuleForm({ onSubmit, onCancel }) {
+export default function ModuleForm({ onSubmit, onCancel, initialModule=null }) {
   // Initialisation ----------------------------------
   const endpoint = "Users";
   const method = "GET";
 
-  const initialModule = {
-    ModuleName: "Programming 3",
-    ModuleCode: "CI6001",
-    ModuleLevel: 0,
-    ModuleLeaderID: 0,
-    ModuleImage: "https://images.freeimages.com/images/small-previews/fa1/cable-5-1243077.jpg"
-  };
+  if (!initialModule) {
+    initialModule = {
+      ModuleName: "Programming 3",
+      ModuleCode: "CI6001",
+      ModuleLevel: 0,
+      ModuleLeaderID: 0,
+      ModuleImage: "https://images.freeimages.com/images/small-previews/fa1/cable-5-1243077.jpg"
+    }
+  }
 
   // State ---------------------------------------
   const [module, handleChange, errors, updateErrors] = Form.useFormState(initialModule);
@@ -49,7 +51,7 @@ export default function ModuleForm({ onSubmit, onCancel }) {
   const isValidateModuleLevel = () => ((module.ModuleLevel > 2) && (module.ModuleLevel < 8)) ? true : false;
   const isValidateModuleLeader = () => parseInt(module.ModuleLeaderID) ? true : false;
   const isValidateModuleImage = () => isValidURL(module.ModuleImage) ? true : false;
-  const isValidModuleCode = (value) => (/\D{2}\d{4}/.test(value));
+  const isValidModuleCode = (value) => (/^\D{2}\d{4}$/.test(value));
   const isValidURL = (value) => (/^(http|https):\/\/(([a-zA-Z0-9$\-_.+!*'(),;:&=]|%[0-9a-fA-F]{2})+@)?(((25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9]|[1-9][0-9]|[0-9])){3})|localhost|([a-zA-Z0-9\-\u00C0-\u017F]+\.)+([a-zA-Z]{2,}))(:[0-9]+)?(\/(([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*(\/([a-zA-Z0-9$\-_.+!*'(),;:@&=]|%[0-9a-fA-F]{2})*)*)?(\?([a-zA-Z0-9$\-_.+!*'(),;:@&=/?]|%[0-9a-fA-F]{2})*)?(#([a-zA-Z0-9$\-_.+!*'(),;:@&=/?]|%[0-9a-fA-F]{2})*)?)?$/.test(value));
 
   // View ----------------------------------------

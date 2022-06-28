@@ -17,6 +17,7 @@ ModuleCard.propTypes = {
     ModuleLevel: PropTypes.number.isRequired
   }),
   handlers: PropTypes.exact({
+    handleSelect: PropTypes.func.isRequired,
     handleSubscribe: PropTypes.func.isRequired,
     handleUnsubscribe: PropTypes.func.isRequired,
     handleModify: PropTypes.func.isRequired,
@@ -41,11 +42,11 @@ export default function ModuleCard({module,handlers}) {
 
         <div className="cardLayout">
 
-          <div className="cardImage">
+          <div className="cardImage"  onClick={() => handlers.handleSelect(module.ModuleCode)}>
             <img src={module.ModuleImage} alt="Visual representation of module" />
           </div>
 
-          <div className="cardDetails">
+          <div className="cardDetails"  onClick={() => handlers.handleSelect(module.ModuleCode)}>
             <h1>{module.ModuleName} ({module.ModuleCode})</h1>
             <p>
               <span className="cardAttribute">Level</span>
@@ -64,7 +65,7 @@ export default function ModuleCard({module,handlers}) {
                   </ToolTipDecorator>
               }
               <ToolTipDecorator message="Click to modify module details">
-                <Action.Modify onClick={handlers.handleModify} />
+                <Action.Modify onClick={() => handlers.handleModify(module)} />
               </ToolTipDecorator>
               <ToolTipDecorator message="Delete module from list">
                 <Action.Delete onClick={() => handlers.handleDelete(module.ModuleID)} />

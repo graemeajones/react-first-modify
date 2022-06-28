@@ -11,11 +11,8 @@ import './MyModules.css';
 
 export default function MyModules() {
   // Properties ----------------------------------
-  const endpoint = "Modules";
-  const method = "GET";
-
   // State ---------------------------------------
-  const [modules, setModules, loadingMessage] = useFetch(endpoint, method);
+  const [modules, setModules, loadingMessage] = useFetch("Modules", "GET");
   const [showFavourites, setShowFavourites] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +22,9 @@ export default function MyModules() {
 
   // Context -------------------------------------
   // Methods -------------------------------------
+
+  // Select module handler
+  const handleSelect = (name) => console.log(`Module ${name} selected`);
 
   // List modules handlers
   const handleListAllModules = () => setShowFavourites(false);
@@ -68,12 +68,12 @@ export default function MyModules() {
 
   // Add module methods
   const handleAdd = (newModule) => {
-    newModule.ModuleID = 1+Math.max(...modules.map(module => module.ModuleID));
+    newModule.ModuleID = 1 + Math.max(...modules.map(module => module.ModuleID));
     setModules([...modules, newModule]);
     setShowModal(false);
   }
 
-  const handleAddRequest = () => { 
+  const handleAddRequest = () => {
     configureAddModal();
     setShowModal(true);
   };
@@ -81,11 +81,26 @@ export default function MyModules() {
   const configureAddModal = () => {
     setModalHeading("Add new module");
     setModalContent(<ModuleForm onSubmit={handleAdd} onCancel={dismissModal} />);
-    setModalActions( null );
+    setModalActions(null);
   }
 
-  // Add module methods
-  const handleModify = () => console.log("Modify the module");
+  // Modify module methods
+  const handleModify = (targetModule) => {
+    const targetIndex = modules.findIndex(module => module.ModuleID === targetModule.ModuleID);
+    setModules(modules.map((module, index) => index === targetIndex ? targetModule : module));
+    setShowModal(false);
+  }
+
+  const handleModifyRequest = (targetModule) => {
+    configureModifyModal(targetModule);
+    setShowModal(true);
+  };
+
+  const configureModifyModal = (targetModule) => {
+    setModalHeading("Modify module");
+    setModalContent(<ModuleForm onSubmit={handleModify} onCancel={dismissModal} initialModule={targetModule} />);
+    setModalActions(null);
+  }
 
   // Modal methods
   const dismissModal = () => setShowModal(false);
@@ -123,9 +138,10 @@ export default function MyModules() {
                           key={module.ModuleID}
                           module={module}
                           handlers={{
+                            handleSelect,
                             handleSubscribe,
                             handleUnsubscribe,
-                            handleModify,
+                            handleModify: handleModifyRequest,
                             handleDelete: handleDeleteRequest
                           }}
                         />
