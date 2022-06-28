@@ -1,0 +1,11 @@
+/* -------------------------------------------- */
+/* Styling //////////////////////////////////// */
+/* -------------------------------------------- */
+
+footer.Footer {
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-top: 1px solid #b77de0;
+  background: #aa63da;
+}

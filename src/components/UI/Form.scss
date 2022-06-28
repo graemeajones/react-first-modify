@@ -1,0 +1,84 @@
+// -----------------------------------------------
+// Styling ///////////////////////////////////////
+// -----------------------------------------------
+
+$Red: #edafb8; // Rose
+$DarkRed: darken($Red, 20%);
+$Green: #29e7cd; // Cyan
+$DarkGreen: darken($Green, 10%);
+$BorderGrey: LightGrey;
+
+form.Form {
+  width: 100%;
+  padding: 10px 0; 
+
+  &.Bordered {
+    margin: 10px 0;
+    padding: 20px;
+    border: 1px solid $BorderGrey;
+    border-radius: 5px;
+  }
+
+  div.FormTray {
+    width: 100%;
+    margin-bottom: 20px;
+
+    div.FormItem {
+
+      margin-bottom: 20px;
+      
+      label.FormLabel {
+        display: block;
+        font-weight: 600;
+      }
+
+      p.FormAdvice {
+        color: $DarkGreen; 
+        font-weight: 400;
+        font-size: 90%;
+      }
+
+      select.FormInput,
+      input.FormInput {
+        width: 100%;
+        padding: 3px;
+        margin: 1px 0; // Add "extra" margin so it can be removed when in focus. Otherwise surrounding elements move annoyingly up and down!
+        font-size: 100%;
+        border-radius: 0px;
+        border: 1px solid $BorderGrey;
+        background: White;
+
+        &::placeholder,
+        &:disabled {
+          color: Grey;
+          font-weight: 300;
+        }
+
+        &:hover,
+        &:focus {
+          outline: 0;
+          padding: 3px 2px;
+          margin: 0 0; // Remove "extra" margin to compensate for extra border width. Otherwise surrounding elements move annoyingly up and down!
+        }
+        &:hover { border: 2px solid $BorderGrey }
+        &:focus { border: 2px solid $DarkGreen; }
+
+        &[type="number"] { text-align: left; }
+
+        &.FormError {
+          border-color: $DarkRed;
+        }
+      }
+
+      p.FormError {
+        color: $DarkRed; 
+        font-weight: 400;
+        font-size: 90%;
+      }
+    }
+  }
+
+  div.ActionTray {
+    
+  }
+}

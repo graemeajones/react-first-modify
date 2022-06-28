@@ -1,0 +1,14 @@
+/* -------------------------------------------- */
+/* Styling //////////////////////////////////// */
+/* -------------------------------------------- */
+
+nav.Navbar {
+  display: flex;
+  overflow: hidden;
+  background-color: #edafb8;
+}
+
+nav.Navbar > div.navItem { padding: 10px; }
+nav.Navbar > div.navItem:hover { background-color: #f4cdd3; }
+nav.Navbar > div.navItem > a { color: White; text-decoration: none; }
+nav.Navbar > div.navItem > a.navSelected { color: Black; }

@@ -1,0 +1,32 @@
+/* -------------------------------------------- */
+/* Styling //////////////////////////////////// */
+/* -------------------------------------------- */
+
+div.CardContainer {
+  /* Appearance */
+  padding-top: 10px;
+  width: 100%;
+
+  /* Layout */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+div.Card {
+  /* Appearance */
+  border: 0px;
+  border-radius: 5px;
+  background: White;
+  box-shadow: 4px 4px 8px 4px rgba(70,70,70,0.3);
+  position: static;
+}
+
+div.Card.Hovering {
+  /* Appearance */
+  border-radius: 5px;
+  box-shadow: 5px 10px 20px 4px rgba(70,70,70,0.5);
+  transform: translateY(-5px);
+  transition: all 0.25s ease;
+}
