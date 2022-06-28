@@ -6,15 +6,15 @@ div.FavouriteDecorator {
   /* Position */
   position: relative;
 
-  & > div.Favourite {
+  div.Favourite {
     /* Position */
     position: absolute;
     top: 5px;
     right: 5px;
 
     div.Icon {
-      width: 36px;
-      height: 36px;
+        width: 36px;
+        height: 36px;
     }
   }
 }

@@ -23,14 +23,14 @@ export default function MyModules() {
   // Context -------------------------------------
   // Methods -------------------------------------
 
-  // Select module handler
+  // Select handler
   const handleSelect = (name) => console.log(`Module ${name} selected`);
 
-  // List modules handlers
+  // List handlers
   const handleListAllModules = () => setShowFavourites(false);
   const handleListFavourites = () => setShowFavourites(true);
   
-  // Favourite module handlers
+  // Favourite handlers
   const handleSubscribe = (id) => setModules(
     modules.map((module) => module.ModuleID === id ? { ...module, isSubscribed: true } : module)
   );
@@ -39,18 +39,13 @@ export default function MyModules() {
     modules.map((module) => module.ModuleID === id ? { ...module, isSubscribed: false } : module)
   );
 
-  // Delete module methods
+  // Delete handlers
   const handleDelete = (id) => {
     setModules(modules.filter((module) => module.ModuleID !== id));
-    dismissModal();
+    handleDismiss();
   }
 
   const handleDeleteRequest = (id) => {
-    configureDeleteModal(id);
-    setShowModal(true);
-  };
-
-  const configureDeleteModal = (id) => {
     const deleteModule = modules.find((module) => module.ModuleID === id);
     setModalHeading("Alert!");
     setModalContent(<p>Are you sure you want to delete module {deleteModule.ModuleCode} {deleteModule.ModuleName}?</p>);
@@ -60,13 +55,14 @@ export default function MyModules() {
           <Action.Yes showText onClick={() => handleDelete(id)} />
         </ToolTipDecorator>,
         <ToolTipDecorator key="ActionNo" message="Click to abandon deletion">
-          <Action.No showText onClick={() => dismissModal()} />
+          <Action.No showText onClick={() => handleDismiss()} />
         </ToolTipDecorator>
       ]
     );
-  }
+    setShowModal(true);
+  };
 
-  // Add module methods
+  // Add handlers
   const handleAdd = (newModule) => {
     newModule.ModuleID = 1 + Math.max(...modules.map(module => module.ModuleID));
     setModules([...modules, newModule]);
@@ -74,17 +70,13 @@ export default function MyModules() {
   }
 
   const handleAddRequest = () => {
-    configureAddModal();
+    setModalHeading("Add new module");
+    setModalContent(<ModuleForm onSubmit={handleAdd} onCancel={handleDismiss} />);
+    setModalActions(null);
     setShowModal(true);
   };
 
-  const configureAddModal = () => {
-    setModalHeading("Add new module");
-    setModalContent(<ModuleForm onSubmit={handleAdd} onCancel={dismissModal} />);
-    setModalActions(null);
-  }
-
-  // Modify module methods
+  // Modify handlers
   const handleModify = (targetModule) => {
     const targetIndex = modules.findIndex(module => module.ModuleID === targetModule.ModuleID);
     setModules(modules.map((module, index) => index === targetIndex ? targetModule : module));
@@ -92,18 +84,14 @@ export default function MyModules() {
   }
 
   const handleModifyRequest = (targetModule) => {
-    configureModifyModal(targetModule);
+    setModalHeading("Modify module");
+    setModalContent(<ModuleForm onSubmit={handleModify} onCancel={handleDismiss} initialModule={targetModule} />);
+    setModalActions(null);
     setShowModal(true);
   };
 
-  const configureModifyModal = (targetModule) => {
-    setModalHeading("Modify module");
-    setModalContent(<ModuleForm onSubmit={handleModify} onCancel={dismissModal} initialModule={targetModule} />);
-    setModalActions(null);
-  }
-
-  // Modal methods
-  const dismissModal = () => setShowModal(false);
+  // Modal handlers
+  const handleDismiss = () => setShowModal(false);
 
   // View ----------------------------------------
   return (
